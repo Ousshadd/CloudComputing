@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stress-test-pi
+spec:
+  completions: 2
+  parallelism: 2
+  template:
+    spec:
+      containers:
+      - name: stress-pi
+        image: perl:5.34-slim
+        command: ["/bin/sh", "-c", "echo 'DEBUT DU STRESS TEST...'; perl -Mbignum=bpi -wle 'print bpi(3000)'; echo 'FIN DU STRESS TEST REUSSIE!'"]
+      restartPolicy: Never
